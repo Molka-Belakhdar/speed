@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Speed Imprim 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Open+Sans:wght@400;600;700&display=swap">
+<style>
+:root{--navy:#002b6b;--navy2:#00205a;--sky:#3cb4ff;--ice:#a6fbff;--pink:#ff6bcb;--yellow:#ffe600;--bg:#ffffff;--text:#0a1b3d;--card:#f2f9ff;--line:#cfe6fb;
+--h:'Rajdhani',system-ui,sans-serif;--b:'Open Sans',system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#06122b;--text:#e6f1ff;--card:#0c1f45;--line:#1d3a6e}}
+:root[data-theme="dark"]{--bg:#06122b;--text:#e6f1ff;--card:#0c1f45;--line:#1d3a6e}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;font-family:var(--b);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:var(--h);margin:0;line-height:1.05}
+a{color:inherit}
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 4vw;background:var(--bg);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo svg{width:46px;height:46px}.logo b{font:700 2rem/1 var(--h);display:block;color:var(--navy)}
+.logo small{font:500 .95rem/1 var(--h);display:block;margin-left:4px;color:var(--text)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo b{color:#fff}}
+nav{display:flex;align-items:center;gap:26px;font-weight:700;font-size:.85rem}
+nav a{text-decoration:none;position:relative;padding:4px 0}
+nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--sky);transition:width .3s}
+nav a:hover::after{width:100%}
+.cartbtn{position:relative;background:var(--navy);color:#fff;border:0;border-radius:50%;width:44px;height:44px;cursor:pointer;display:grid;place-items:center;transition:transform .2s}
+.cartbtn:hover{transform:scale(1.08)}.cartbtn svg{width:22px;height:22px}
+.cartbtn.bump{animation:bump .4s}@keyframes bump{50%{transform:scale(1.3) rotate(-8deg)}}
+#count{position:absolute;top:-4px;right:-4px;background:var(--pink);color:#fff;font:700 .72rem var(--b);min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center}
+@media(max-width:760px){nav a{display:none}}
+.promo{background:var(--navy);color:#fff;overflow:hidden;white-space:nowrap;font-weight:700;font-size:.95rem;padding:7px 0;border-bottom:1px solid #1d4d9c}
+.promo div{display:inline-block;animation:marq 28s linear infinite}.promo span{margin:0 4vw}
+@keyframes marq{to{transform:translateX(-50%)}}
+.hero{position:relative;min-height:560px;display:flex;align-items:center;padding:60px 4vw;background:linear-gradient(120deg,#5d8aa8,#3b8fd0 60%,#2d7fe0);overflow:hidden;color:#fff}
+.hex{position:absolute;clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);background:linear-gradient(135deg,rgba(130,220,255,.9),rgba(40,140,230,.7));animation:float 9s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-26px) rotate(6deg)}}
+.hero .copy{position:relative;z-index:2;max-width:520px}
+.hero h1{font-size:clamp(3rem,8vw,5rem);color:var(--navy2);letter-spacing:.02em;animation:rise .9s both}
+.hero h1 small{display:block;font:400 1.3rem var(--b);color:#fff;letter-spacing:0}
+.hero p{font-size:1.1rem;animation:rise .9s .15s both;text-shadow:0 1px 8px rgba(0,30,80,.4)}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+.btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;animation:rise .9s .3s both}
+.btn{font:600 1.15rem var(--h);background:var(--navy);color:#fff;border:2px solid var(--navy);padding:10px 30px;text-decoration:none;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.btn:hover{background:var(--sky);border-color:var(--sky);color:var(--navy2);transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,43,107,.35)}
+.btn.alt{background:transparent;color:#fff;border-color:#fff}
+.layer{position:absolute;left:0;right:0;height:3px;background:var(--ice);box-shadow:0 0 18px var(--ice);animation:scan 5s ease-in-out infinite;z-index:1;opacity:.8}
+@keyframes scan{0%,100%{top:8%}50%{top:92%}}
+section{padding:80px 4vw}
+.title{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:34px}
+.title svg{width:52px;height:52px}.title h2{font-size:clamp(2rem,5vw,3rem)}
+.steps{background:var(--navy);color:#fff;text-align:center}
+.steps .lead{max-width:860px;margin:0 auto 50px;font-weight:700}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;max-width:1000px;margin:auto}
+.step{padding:28px 10px;border:1px solid #1d4d9c;border-radius:14px;transition:.35s}
+.step:hover{background:#0a3d8f;transform:translateY(-8px)}
+.step svg{width:56px;height:56px;stroke:var(--sky);fill:none;stroke-width:1.8;transition:transform .6s}
+.step:hover svg{transform:rotate(360deg)}
+.step h3{font-size:1.8rem;margin-top:10px}
+.reveal{opacity:0;transform:translateY(30px);transition:1s}.reveal.on{opacity:1;transform:none}
+.prods{background:linear-gradient(160deg,#7fe8ff,#a6fbff 50%,#6fcbe8);color:#00205a}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px;max-width:1000px;margin:auto}
+.card{background:rgba(255,255,255,.75);backdrop-filter:blur(6px);border-radius:16px;padding:22px;text-align:center;transition:.35s}
+.card:hover{transform:translateY(-10px) rotate(-1deg);box-shadow:0 18px 30px rgba(0,43,107,.25)}
+.card .ph{height:150px;display:grid;place-items:center}
+.card .ph svg{width:120px;height:120px;animation:float 6s ease-in-out infinite}
+.card h3{font-size:1.7rem}.card p{margin:6px 0;font-size:.92rem}.price{font:700 1.5rem var(--h)}
+.order{background:var(--card)}
+.form{max-width:760px;margin:auto;display:grid;gap:18px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:600px){.two{grid-template-columns:1fr}}
+label{font-weight:700;font-size:.9rem;display:grid;gap:6px}
+input,select,textarea{font:inherit;padding:12px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);transition:border .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--sky);box-shadow:0 0 0 4px rgba(60,180,255,.25)}
+.drop{border:3px dashed var(--sky);border-radius:16px;padding:40px 20px;text-align:center;cursor:pointer;transition:.3s;background:var(--bg)}
+.drop:hover,.drop.over{background:rgba(60,180,255,.12);transform:scale(1.02);border-color:var(--pink)}
+.drop svg{width:48px;height:48px;stroke:var(--sky);fill:none;stroke-width:2;animation:float 3s ease-in-out infinite}
+.drop strong{display:block;font:700 1.4rem var(--h)}.drop em{font-size:.85rem;opacity:.75}
+.fname{font-weight:700;color:var(--sky);margin-top:8px;word-break:break-all}
+.msg{min-height:1.4em;font-weight:700;color:#d6338f}
+footer{background:var(--navy2);color:#fff}
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;max-width:1000px;margin:auto}
+footer h2{margin-bottom:14px;font-size:2.4rem}footer input,footer textarea{width:100%;margin-bottom:12px;background:#0a3270;border-color:#1d4d9c;color:#fff}
+.copy2{text-align:center;padding:18px;font-size:.85rem;background:#00184a;color:#fff}
+#drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:var(--bg);color:var(--text);z-index:50;transform:translateX(105%);transition:transform .45s cubic-bezier(.2,.8,.2,1);box-shadow:-10px 0 40px rgba(0,0,0,.3);display:flex;flex-direction:column;padding:20px;padding-top:calc(20px + env(safe-area-inset-top,0px))}
+#drawer.open{transform:none}
+#veil{position:fixed;inset:0;background:rgba(0,20,60,.5);z-index:40;opacity:0;pointer-events:none;transition:.3s}#veil.open{opacity:1;pointer-events:auto}
+#items{flex:1;overflow:auto;margin:14px 0}
+.it{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);animation:rise .4s both}
+.it small{display:block;opacity:.7;word-break:break-all}
+.x{background:none;border:0;color:#d6338f;font-size:1.2rem;cursor:pointer}
+.tot{display:flex;justify-content:space-between;font:700 1.6rem var(--h);margin-bottom:12px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:30px;z-index:60;transition:.4s;font-weight:600}
+#toast.show{transform:translate(-50%,0)}
+.rt{display:flex;align-items:center;gap:14px}[hidden]{display:none!important}
+.acc{font:700 .85rem var(--b);background:none;border:2px solid var(--navy);color:var(--text);border-radius:22px;padding:8px 16px;cursor:pointer;transition:.25s;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc:hover{background:var(--sky);border-color:var(--sky);color:var(--navy2);transform:translateY(-2px)}
+#av{position:fixed;inset:0;background:rgba(0,20,60,.6);z-index:70;opacity:0;pointer-events:none;transition:.3s}#av.open{opacity:1;pointer-events:auto}
+#auth{position:fixed;left:50%;top:50%;width:min(420px,92vw);max-height:92vh;overflow:auto;background:var(--bg);color:var(--text);border-radius:18px;z-index:80;padding:26px;transform:translate(-50%,-46%) scale(.92);opacity:0;pointer-events:none;transition:.35s cubic-bezier(.2,.8,.2,1);box-shadow:0 24px 60px rgba(0,0,0,.4);border-top:6px solid var(--sky)}
+#auth.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
+.tabs{display:flex;gap:6px;margin:14px 0 18px;background:var(--card);border-radius:30px;padding:4px}
+.tabs button{flex:1;border:0;background:none;color:var(--text);font:700 1.15rem var(--h);padding:8px;border-radius:26px;cursor:pointer;transition:.25s}
+.tabs button.on{background:var(--navy);color:#fff}
+#auth .f{display:grid;gap:14px;animation:rise .4s both}
+#amsg{min-height:1.3em;font-weight:700;color:#d6338f;font-size:.9rem}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="lg" viewBox="0 0 60 60"><rect x="16" y="2" width="22" height="22" fill="#ffe600"/><rect x="2" y="20" width="22" height="22" fill="#3cb4ff"/><rect x="20" y="28" width="26" height="28" fill="#ff6bcb" opacity=".95"/><rect x="20" y="20" width="4" height="4" fill="#3cb4ff"/></symbol>
+<symbol id="fig" viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="28" ry="6" fill="#00205a" opacity=".35"/><rect x="36" y="68" width="12" height="20" rx="5" fill="#00205a"/><rect x="52" y="68" width="12" height="20" rx="5" fill="#00205a"/><rect x="21" y="42" width="11" height="26" rx="5.5" fill="#3cb4ff"/><rect x="68" y="42" width="11" height="26" rx="5.5" fill="#3cb4ff"/><rect x="33" y="38" width="34" height="34" rx="10" fill="#1f63b8"/><rect x="33" y="58" width="34" height="5" fill="#ff6bcb"/><circle cx="50" cy="21" r="15" fill="#3cb4ff"/><circle cx="44" cy="20" r="2.4" fill="#00205a"/><circle cx="56" cy="20" r="2.4" fill="#00205a"/><path d="M44 27q6 5 12 0" stroke="#00205a" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+<symbol id="cube" viewBox="0 0 100 100"><path d="M50 8l38 20v44L50 92 12 72V28z" fill="#3cb4ff"/><path d="M50 50l38-22M50 50L12 28M50 50v42" stroke="#fff" stroke-width="3" fill="none"/></symbol></defs></svg>
+
+<header>
+<a class="logo" href="#top" aria-label="Speed Imprim 3D"><svg><use href="#lg"/></svg><span><b>Speed</b><small>Imprim 3D</small></span></a>
+<nav><a href="#etapes">Ressources</a><a href="#produits">Matériaux</a><a href="#commande">Transférer</a><a href="#contact">Contact</a></nav>
+<div class="rt"><button class="acc" id="acc">S’inscrire</button><button class="cartbtn" id="open" aria-label="Ouvrir le panier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.5 11h10L20 7H6.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg><span id="count">0</span></button></div>
+</header>
+<div class="promo" aria-label="Offre"><div id="mq"></div></div>
+
+<main id="top">
+<div class="hero">
+<span class="layer"></span>
+<div class="hex" style="width:340px;height:380px;right:14%;top:8%"></div>
+<div class="hex" style="width:220px;height:250px;right:-30px;top:-20px;animation-delay:-3s;opacity:.7"></div>
+<div class="hex" style="width:260px;height:290px;right:4%;bottom:-70px;animation-delay:-5s"></div>
+<div class="hex" style="width:140px;height:160px;right:36%;bottom:8%;animation-delay:-2s;opacity:.5"></div>
+<div class="copy">
+<h1>Speed-Imprim<small>Impression 3D</small></h1>
+<p>Notre entreprise est spécialisée dans l’impression 3D. Notre mission est d’accompagner les particuliers et les professionnels dans la conception et la fabrication d’objets personnalisés.</p>
+<div class="btns"><a class="btn" href="#commande">Devis</a><a class="btn" href="#contact">Contact</a><a class="btn alt" href="#contact">Adresse</a></div>
+</div></div>
+
+<section class="steps" id="etapes">
+<div class="title reveal"><svg><use href="#lg"/></svg><h2>Préparer votre Projet</h2></div>
+<p class="lead reveal">3 étapes pour obtenir vos pièces grâce à notre service d’impression 3D en ligne.<br>Accélérez votre innovation et bénéficiez de l’expertise de professionnels pour fabriquer des produits de haute qualité.</p>
+<div class="row">
+<div class="step reveal"><svg viewBox="0 0 48 48"><path d="M6 24h24M22 14l10 10-10 10M30 6h12v36H30"/></svg><h3>Transférer</h3><p>Envoyez votre fichier 3D</p></div>
+<div class="step reveal"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="6"/><path stroke-width="5" d="M38 24h5M24 38v5M10 24H5M24 10V5M33.9 33.9l3.5 3.5M14.1 33.9l-3.5 3.5M33.9 14.1l3.5-3.5M14.1 14.1l-3.5-3.5"/></svg><h3>Commander</h3><p>Choisissez matériau et quantité</p></div>
+<div class="step reveal"><svg viewBox="0 0 48 48"><path d="M4 12h24v22H4zM28 18h9l7 8v8H28"/><circle cx="14" cy="36" r="4"/><circle cx="36" cy="36" r="4"/></svg><h3>Livraison</h3><p>Recevez votre pièce chez vous</p></div>
+</div></section>
+
+<section class="prods" id="produits">
+<div class="title reveal"><svg><use href="#lg"/></svg><h2>Nos Produits</h2></div>
+<div class="grid" id="grid"></div></section>
+
+<section class="order" id="commande">
+<div class="title reveal"><svg><use href="#lg"/></svg><h2>Commander votre pièce</h2></div>
+<div class="form reveal">
+<div class="drop" id="drop" tabindex="0" role="button"><svg viewBox="0 0 48 48"><path d="M24 34V8M14 18l10-10 10 10M6 30v10h36V30"/></svg><strong>Déposez votre fichier ici</strong><em>ou cliquez pour parcourir (.stl, .obj, .3mf, .step)</em><div class="fname" id="fname"></div></div>
+<input type="file" id="file" accept=".stl,.obj,.3mf,.step,.stp" hidden>
+<div class="two"><label>Matériau<select id="mat"><option value="0">PLA – 0 €</option><option value="4">PETG – +4 €</option><option value="8">Résine – +8 €</option><option value="12">Nylon – +12 €</option></select></label>
+<label>Quantité<input type="number" id="qty" min="1" value="1"></label></div>
+<label>Couleur<select id="col"><option>Bleu</option><option>Rose</option><option>Jaune</option><option>Blanc</option><option>Noir</option></select></label>
+<div class="msg" id="omsg"></div>
+<button class="btn" id="addfile">Ajouter au panier</button>
+</div></section>
+</main>
+
+<footer id="contact"><section>
+<div class="contact">
+<div class="reveal"><h2>Contact</h2><p>Un projet, une question ? Écrivez-nous, nous répondons sous 24 h.</p><p><b>Speed Imprim 3D</b><br>Adresse : Courbevoie<br>contact@speed-imprim3d.fr</p></div>
+<div class="reveal"><input id="cn" placeholder="Votre nom" aria-label="Nom"><input id="ce" type="email" placeholder="Votre e-mail" aria-label="E-mail"><textarea id="cm" rows="4" placeholder="Votre message" aria-label="Message"></textarea><button class="btn" id="send">Envoyer le message</button></div>
+</div></section><div class="copy2">© 2026 Speed Imprim 3D</div></footer>
+
+<div id="veil"></div>
+<aside id="drawer" aria-label="Panier"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="font-size:2rem">Votre panier</h2><button class="x" id="close" aria-label="Fermer" style="color:inherit;font-size:1.6rem">✕</button></div>
+<div id="items"></div><div class="tot"><span>Total</span><span id="tot">0 €</span></div><button class="btn" id="pay">Valider la commande</button></aside>
+<div id="av"></div>
+<div id="auth" role="dialog" aria-modal="true" aria-label="Compte">
+<div style="display:flex;justify-content:space-between;align-items:center"><div class="logo" style="pointer-events:none"><svg><use href="#lg"/></svg><span><b>Speed</b><small>Imprim 3D</small></span></div><button class="x" id="aclose" aria-label="Fermer" style="color:inherit;font-size:1.6rem">✕</button></div>
+<div class="tabs"><button data-t="l" class="on">Se connecter</button><button data-t="s">S’inscrire</button></div>
+<div class="f" id="fl"><label>E-mail<input id="le" type="email" autocomplete="email"></label><label>Mot de passe<input id="lp" type="password" autocomplete="current-password"></label><button class="btn" id="lgo">Se connecter</button></div>
+<div class="f" id="fs" hidden><label>Nom complet<input id="sn" autocomplete="name"></label><label>E-mail<input id="se" type="email" autocomplete="email"></label><label>Mot de passe (8 caractères min.)<input id="sp" type="password" autocomplete="new-password"></label><label>Confirmer le mot de passe<input id="sc" type="password" autocomplete="new-password"></label><button class="btn" id="sgo">Créer mon compte</button></div>
+<div id="amsg" style="margin-top:12px"></div>
+</div>
+<div id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const PRODUCTS=[{n:'Impression 3D',d:'Votre fichier, imprimé sur mesure.',i:'cube'},{n:'MINI-MOI',d:'Figurine de vous à partir d’une photo.',i:'fig'}];
+let cart=[];
+$('#mq').innerHTML=('<span>-10% sur votre première commande</span>').repeat(12);
+$('#grid').innerHTML=PRODUCTS.map((p,k)=>`<div class="card reveal"><div class="ph"><svg><use href="#${p.i}"/></svg></div><h3>${p.n}</h3><p>${p.d}</p><div class="price">${p.p} €</div><button class="btn" data-k="${k}" style="margin-top:10px">Ajouter</button></div>`).join('');
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2200)}
+function render(){const n=cart.reduce((a,c)=>a+c.q,0);$('#count').textContent=n;
+$('#items').innerHTML=cart.length?cart.map((c,i)=>`<div class="it"><div><b>${c.n}</b>${c.sub?`<small>${c.sub}</small>`:''}<small>Qté : ${c.q}</small></div><div><b>${c.p*c.q} €</b> <button class="x" data-r="${i}" aria-label="Retirer">✕</button></div></div>`).join(''):'<p>Votre panier est vide. Ajoutez un produit ou envoyez votre fichier 3D.</p>';
+$('#tot').textContent=cart.reduce((a,c)=>a+c.p*c.q,0)+' €'}
+function add(it){cart.push(it);render();const b=$('#open');b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');toast(it.n+' ajouté au panier')}
+const dr=$('#drawer'),vl=$('#veil');
+function tg(o){dr.classList.toggle('open',o);vl.classList.toggle('open',o)}
+$('#open').onclick=()=>tg(true);$('#close').onclick=vl.onclick=()=>tg(false);
+document.addEventListener('click',e=>{const k=e.target.dataset.k,r=e.target.dataset.r;
+if(k!==undefined){const p=PRODUCTS[k];add({n:p.n,p:p.p,q:1})}
+if(r!==undefined){cart.splice(r,1);render()}});
+$('#pay').onclick=()=>{if(!cart.length)return toast('Le panier est vide');cart=[];render();tg(false);toast('Commande envoyée, merci !')};
+let file=null;const drop=$('#drop'),fi=$('#file');
+function setFile(f){if(!f)return;file=f;$('#fname').textContent='✔ '+f.name;$('#omsg').textContent=''}
+drop.onclick=()=>fi.click();drop.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fi.click()}};
+fi.onchange=()=>setFile(fi.files[0]);
+['dragover','dragenter'].forEach(v=>drop.addEventListener(v,e=>{e.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(v=>drop.addEventListener(v,e=>{e.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop',e=>setFile(e.dataTransfer.files[0]));
+$('#addfile').onclick=()=>{if(!file){$('#omsg').textContent='Ajoutez d’abord votre fichier 3D (.stl, .obj, .3mf, .step).';return}
+const m=$('#mat'),q=Math.max(1,+$('#qty').value||1);
+add({n:'Impression 3D sur mesure',p:15+ +m.value,q,sub:`${file.name} · ${m.selectedOptions[0].text.split(' –')[0]} · ${$('#col').value}`});
+file=null;fi.value='';$('#fname').textContent=''};
+$('#send').onclick=()=>{if(!$('#cn').value||!$('#ce').value||!$('#cm').value)return toast('Remplissez tous les champs');
+['#cn','#ce','#cm'].forEach(s=>$(s).value='');toast('Message envoyé, merci !')};
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach((e,i)=>{e.style.transitionDelay=(i%3)*.12+'s';io.observe(e)});
+/* Compte (démo : données gardées en mémoire, perdues au rechargement) */
+let user=null;const users=[],au=$('#auth'),av=$('#av'),acc=$('#acc');
+function tabTo(t){document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$('#fl').hidden=t!=='l';$('#fs').hidden=t!=='s';$('#amsg').textContent=''}
+function authOpen(o,t){au.classList.toggle('open',o);av.classList.toggle('open',o);if(o){tabTo(t||'l');setTimeout(()=>$(t==='s'?'#sn':'#le').focus(),350)}}
+function setUser(u){user=u;acc.textContent=u?u.name.split(' ')[0]+' · Se déconnecter':'S’inscrire'}
+acc.onclick=()=>{if(user){setUser(null);toast('Vous êtes déconnecté')}else authOpen(true,'s')};
+$('#aclose').onclick=av.onclick=()=>authOpen(false);
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>tabTo(b.dataset.t));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){authOpen(false);tg(false)}if(e.key==='Enter'&&au.classList.contains('open')&&e.target.tagName==='INPUT')($('#fl').hidden?$('#sgo'):$('#lgo')).click()});
+function err(t){$('#amsg').textContent=t}
+$('#lgo').onclick=()=>{const e=$('#le').value.trim().toLowerCase(),p=$('#lp').value;
+if(!e||!p)return err('Entrez votre e-mail et votre mot de passe.');
+const u=users.find(x=>x.e===e&&x.p===p);if(!u)return err('E-mail ou mot de passe incorrect. Pas encore de compte ? Cliquez sur « S’inscrire ».');
+setUser(u);authOpen(false);$('#lp').value='';toast('Bon retour, '+u.name.split(' ')[0]+' !')};
+$('#sgo').onclick=()=>{const n=$('#sn').value.trim(),e=$('#se').value.trim().toLowerCase(),p=$('#sp').value,c=$('#sc').value;
+if(!n||!e||!p||!c)return err('Remplissez tous les champs.');
+if(!/^\S+@\S+\.\S+$/.test(e))return err('Cette adresse e-mail n’est pas valide.');
+if(p.length<8)return err('Le mot de passe doit contenir au moins 8 caractères.');
+if(p!==c)return err('Les deux mots de passe ne correspondent pas.');
+if(users.some(x=>x.e===e))return err('Un compte existe déjà avec cet e-mail. Connectez-vous.');
+const u={name:n,e,p};users.push(u);setUser(u);authOpen(false);['#sn','#se','#sp','#sc'].forEach(s=>$(s).value='');toast('Bienvenue ! -10 % sur votre première commande')};
+render();
+</script>
+</body>
+</html>
